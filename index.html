@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toodless - Smart Task Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="assets/logo.png" alt="toodles" class="logo-image">
+                </div>
+                <div class="tagline">
+                    <span class="tagline-text">Plan your day, your way</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-center">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search tasks..." id="searchInput">
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="clock-section">
+                <div class="current-time" id="currentTime"></div>
+                <div class="current-date" id="currentDate"></div>
+            </div>
+            <div class="timer-section">
+                <button class="timer-btn" id="timerBtn">
+                    <i class="fas fa-stopwatch"></i>
+                    <span id="timerDisplay">00:00:00</span>
+                </button>
+            </div>
+            <div class="profile-section">
+                <div class="profile-avatar" id="userAvatar">👤</div>
+                <div class="profile-menu" id="profileMenu" style="display: none;">
+                    <div class="profile-info">
+                        <div class="profile-name" id="profileName">User</div>
+                        <div class="profile-email" id="profileEmail">user@example.com</div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="profile-action-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-item active" data-view="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </div>
+                    <div class="nav-item" data-view="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>Tasks</span>
+                        <span class="task-count" id="sidebarTaskCount">0</span>
+                    </div>
+                    <div class="nav-item" data-view="calendar">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Calendar</span>
+                    </div>
+                    <div class="nav-item" data-view="timer">
+                        <i class="fas fa-clock"></i>
+                        <span>Focus Timer</span>
+                    </div>
+                </div>
+                
+
+                <div class="nav-section">
+                    <div class="section-title">SETTINGS</div>
+                    <div class="nav-item" data-view="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboardView" class="view-container active">
+                <div class="view-header">
+                    <div class="header-left-content">
+                        <h2 id="userGreeting">Good Morning!</h2>
+                        <div class="greeting-text">Welcome to your productivity dashboard</div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-secondary">
+                            <i class="fas fa-bell"></i>
+                            Notifications
+                        </button>
+                        <button class="btn-primary" id="quickAddBtn">
+                            <i class="fas fa-plus"></i>
+                            Quick Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-overview">
+                    <div class="overview-cards">
+                        <div class="overview-card">
+                            <div class="card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                                    <circle cx="8" cy="16" r="1" fill="currentColor"/>
+                                    <circle cx="16" cy="16" r="1" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="card-content">
+                                <h3>Today's Events</h3>
+                                <p class="card-number">5</p>
+                                <p class="card-subtitle">3 meetings, 2 tasks</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="card-content">
+                                <h3>Tasks Completed</h3>
+                                <p class="card-number">12</p>
+                                <p class="card-subtitle">This week</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="12" y1="12" x2="12" y2="8" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="12" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <div class="card-content">
+                                <h3>Focus Time</h3>
+                                <p class="card-number">4.5h</p>
+                                <p class="card-subtitle">Today</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="card-content">
+                                <h3>Weekly Goal</h3>
+                                <p class="card-number">85%</p>
+                                <p class="card-subtitle">On track</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="window.toodlessApp?.switchView('calendar')">
+                                <i class="fas fa-calendar"></i>
+                                <span>View Calendar</span>
+                            </button>
+                            <button class="action-btn" onclick="window.toodlessApp?.switchView('tasks')">
+                                <i class="fas fa-tasks"></i>
+                                <span>Manage Tasks</span>
+                            </button>
+                            <button class="action-btn" onclick="window.toodlessApp?.switchView('timer')">
+                                <i class="fas fa-stopwatch"></i>
+                                <span>Start Timer</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks View -->
+            <div id="tasksView" class="view-container">
+                <div class="view-header">
+                    <div class="header-left-content">
+                        <h2>All Tasks</h2>
+                        <div class="greeting-text">Manage your tasks across all dates</div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-secondary" id="filterTasksBtn">
+                            <i class="fas fa-filter"></i>
+                            Filter
+                        </button>
+                        <button class="btn-primary" id="addTaskFromTasksBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Task
+                        </button>
+                    </div>
+                </div>
+
+                <!-- All Tasks Todo List -->
+                <section class="todo-section">
+                    <div class="todo-header">
+                       
+                    </div>
+                    
+                    <div class="todo-list-container">
+                        <div class="todo-list" id="allTasksList">
+                            <!-- All tasks will be dynamically generated here -->
+                        </div>
+                        
+                        <div class="todo-input-section" id="allTasksInputSection" style="display: none;">
+                            <div class="todo-input-group">
+                                <input type="text" id="newAllTaskInput" placeholder="What needs to be done?" class="todo-input">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="taskDateInput">Date</label>
+                                        <input type="date" id="taskDateInput" class="todo-input">
+                                    </div>
+                                </div>
+                                <div class="todo-input-actions">
+                                    <button class="btn-secondary" id="cancelAllTaskBtn">Cancel</button>
+                                    <button class="btn-primary" id="saveAllTaskBtn">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendarView" class="view-container">
+                <div class="view-header">
+                    <div class="header-left-content">
+                        <h2 id="calendarTitle">Calendar</h2>
+                        <div class="greeting-text">View your tasks and events</div>
+                                </div>
+                    <div class="header-actions">
+                        <button class="btn-secondary" id="calendarTodayBtn">
+                            <i class="fas fa-calendar-day"></i>
+                            Today
+                        </button>
+                        <button class="btn-primary" id="addTaskFromCalendarBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Task
+                        </button>
+                            </div>
+                        </div>
+
+                <!-- Calendar Container -->
+                <div class="calendar-container">
+                    <!-- Calendar Header -->
+                    <div class="calendar-header">
+                        <div class="calendar-nav">
+                            <button class="nav-btn" id="prevMonth">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <h2 id="currentMonth">October 2023</h2>
+                            <button class="nav-btn" id="nextMonth">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="month">Month</button>
+                            <button class="view-btn" data-view="week">Week</button>
+                            <button class="view-btn" data-view="day">Day</button>
+                        </div>
+                    </div>
+
+                    <!-- Month View -->
+                    <div class="calendar-view" id="monthView">
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar headers -->
+                            <div class="calendar-day-header">Sun</div>
+                            <div class="calendar-day-header">Mon</div>
+                            <div class="calendar-day-header">Tue</div>
+                            <div class="calendar-day-header">Wed</div>
+                            <div class="calendar-day-header">Thu</div>
+                            <div class="calendar-day-header">Fri</div>
+                            <div class="calendar-day-header">Sat</div>
+                            <!-- Calendar days will be generated here -->
+                            </div>
+                        </div>
+
+                        <!-- Week View -->
+                    <div class="calendar-view" id="weekView" style="display: none;">
+                        <div class="week-container">
+                            <div class="week-header">
+                                <div class="time-column-header">Time</div>
+                                <div class="day-column-header" data-day="0">
+                                    <div class="day-label">Sun</div>
+                                    <div class="day-number" id="weekDay0">1</div>
+                                </div>
+                                <div class="day-column-header" data-day="1">
+                                    <div class="day-label">Mon</div>
+                                    <div class="day-number" id="weekDay1">2</div>
+                                </div>
+                                <div class="day-column-header" data-day="2">
+                                    <div class="day-label">Tue</div>
+                                    <div class="day-number" id="weekDay2">3</div>
+                                </div>
+                                <div class="day-column-header" data-day="3">
+                                    <div class="day-label">Wed</div>
+                                    <div class="day-number" id="weekDay3">4</div>
+                                </div>
+                                <div class="day-column-header" data-day="4">
+                                    <div class="day-label">Thu</div>
+                                    <div class="day-number" id="weekDay4">5</div>
+                                </div>
+                                <div class="day-column-header" data-day="5">
+                                    <div class="day-label">Fri</div>
+                                    <div class="day-number" id="weekDay5">6</div>
+                                </div>
+                                <div class="day-column-header" data-day="6">
+                                    <div class="day-label">Sat</div>
+                                    <div class="day-number" id="weekDay6">7</div>
+                                </div>
+                            </div>
+                            <div class="week-grid" id="weekGrid">
+                                <!-- Week grid will be generated here -->
+                            </div>
+                        </div>
+                                </div>
+
+                    <!-- Day View -->
+                    <div class="calendar-view" id="dayView" style="display: none;">
+                        <div class="day-container">
+                            <div class="day-header">
+                                <div class="time-column-header">Time</div>
+                                <div class="day-column-header">
+                                    <div class="day-label" id="dayLabel">Today</div>
+                                    <div class="day-number" id="dayNumber">1</div>
+                                </div>
+                            </div>
+                            <div class="day-grid" id="dayGrid">
+                                <!-- Day grid will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer View -->
+            <div id="timerView" class="view-container">
+                <div class="view-header">
+                    <h2>Focus Timer</h2>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-display-large">
+                        <div class="timer-time" id="timerTimeLarge">25:00</div>
+                        <div class="timer-label" id="timerLabel">Focus Time</div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="timer-control-btn" id="startPauseBtn">
+                            <i class="fas fa-play"></i>
+                            Start
+                        </button>
+                        <button class="timer-control-btn" id="resetBtn">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                    </div>
+                    <div class="timer-presets">
+                        <button class="preset-btn active" data-minutes="25">25min Focus</button>
+                        <button class="preset-btn" data-minutes="5">5min Break</button>
+                        <button class="preset-btn" data-minutes="15">15min Break</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Create New Task</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title</label>
+                        <input type="text" id="taskTitle" placeholder="Enter task title..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" placeholder="Enter task description..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskPriority">Priority</label>
+                            <select id="taskPriority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskProject">Project</label>
+                            <select id="taskProject">
+                                <option value="personal">Personal</option>
+                                <option value="work">Work</option>
+                                <option value="health">Health</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDueDate">Due Date</label>
+                        <input type="date" id="taskDueDate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="modalCancel">Cancel</button>
+                <button type="submit" class="btn-primary" id="modalSave">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="eventModalTitle">Create New Event</h3>
+                <button class="modal-close" id="eventModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title</label>
+                        <input type="text" id="eventTitle" placeholder="Enter event title..." required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventDate">Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCategory">Category</label>
+                            <select id="eventCategory">
+                                <option value="work">Work</option>
+                                <option value="personal">Personal</option>
+                                <option value="education">Education</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventStartTime">Start Time</label>
+                            <input type="time" id="eventStartTime" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventEndTime">End Time</label>
+                            <input type="time" id="eventEndTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription">Description</label>
+                        <textarea id="eventDescription" placeholder="Enter event description..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" id="eventModalCancel">Cancel</button>
+                <button type="submit" class="btn-primary" id="eventModalSave">Save Event</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
