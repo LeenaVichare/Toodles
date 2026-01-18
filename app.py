@@ -24,10 +24,20 @@ TASKS_FILE = 'data/tasks.json'
 TODOS_FILE = 'data/todos.json'
 SESSIONS_FILE = 'data/sessions.json'
 USERS_FILE = 'data/users.json'
+# Ensure data directory and JSON files exist
+os.makedirs("data", exist_ok=True)
 
-def ensure_data_directory():
-    """Ensure data directory exists"""
-    os.makedirs('data', exist_ok=True)
+for file_path in [
+    TASKS_FILE,
+    TODOS_FILE,
+    SESSIONS_FILE,
+    USERS_FILE
+]:
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as f:
+            json.dump([], f)
+
+
 
 def load_data():
     """Load tasks, todos, sessions, and users from files"""
