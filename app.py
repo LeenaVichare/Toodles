@@ -42,7 +42,7 @@ for file_path in [
 def load_data():
     """Load tasks, todos, sessions, and users from files"""
     global tasks, todos, timer_sessions, users
-    ensure_data_directory()
+    
     
     try:
         if os.path.exists(TASKS_FILE):
