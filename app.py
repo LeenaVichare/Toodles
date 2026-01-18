@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, send_from_directory, session, redirect, url_for
+from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 from flask_cors import CORS
 from datetime import datetime, timedelta
 import json
@@ -133,17 +133,11 @@ def require_auth(f):
     decorated_function.__name__ = f.__name__
     return decorated_function
 
-@app.route('/')
+@app.route("/")
 def index():
-    """Serve the main application or redirect to login"""
-    if not is_authenticated():
-        return redirect(url_for('login'))
-    return render_template('index.html')
+    return "FLASK IS WORKING"
 
-@app.route('/<path:filename>')
-def static_files(filename):
-    """Serve static files"""
-    return send_from_directory('.', filename)
+
 
 # Authentication Routes
 
