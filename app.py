@@ -7,7 +7,7 @@ import uuid
 import hashlib
 import secrets
 
-app = Flask(__name__, template_folder='.', static_folder='.')
+app = Flask(__name__)
 CORS(app)
 
 # Configure session
